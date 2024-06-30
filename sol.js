@@ -1,6 +1,3 @@
-/**
- * Debug
- */
 const gui = new lil.GUI();
 
 const parameters = {
@@ -22,22 +19,19 @@ const canvas = document.querySelector('canvas.webgl');
 // Scene
 const scene = new THREE.Scene();
 
+// Set scene background color
+scene.background = new THREE.Color('#1e1a20');
+
 /**
  * Objects
  */
 
-//Textures
-const textureLoader = new THREE.TextureLoader();
-const gradientTexture = textureLoader.load('textures/gradients/3.jpg');
-gradientTexture.magFilter = THREE.NearestFilter;
-
-//Material
+// Material
 const material = new THREE.MeshToonMaterial({
-    color: parameters.materialColor,
-    gradientMap: gradientTexture
+    color: parameters.materialColor
 });
 
-//Meshes
+// Meshes
 const objectsDistance = 4;
 
 const mesh1 = new THREE.Mesh(
@@ -70,7 +64,7 @@ const sectionMeshes = [mesh1, mesh2, mesh3];
  * Particles
  */
 
-//Geometry
+// Geometry
 const particlesCount = 200;
 const position = new Float32Array(particlesCount * 3);
 
@@ -83,14 +77,14 @@ for (let i = 0; i < particlesCount; i++) {
 const particlesGeometry = new THREE.BufferGeometry();
 particlesGeometry.setAttribute('position', new THREE.BufferAttribute(position, 3));
 
-//Material
+// Material
 const particlesMaterial = new THREE.PointsMaterial({
     color: parameters.materialColor,
     sizeAttenuation: true,
     size: 0.03
 });
 
-//Points
+// Points
 const particles = new THREE.Points(particlesGeometry, particlesMaterial);
 scene.add(particles);
 
@@ -98,7 +92,7 @@ scene.add(particles);
  * Lights
  */
 
-const directionalLight = new THREE.DirectionalLight('#fff', 3);
+const directionalLight = new THREE.DirectionalLight('#ffffff', 3);
 directionalLight.position.set(1, 1, 0);
 scene.add(directionalLight);
 
@@ -128,7 +122,7 @@ window.addEventListener('resize', () => {
  * Camera
  */
 
-//Camera
+// Camera
 const cameraGroup = new THREE.Group();
 scene.add(cameraGroup);
 
@@ -197,7 +191,7 @@ const tick = () => {
     const deltaTime = elapsedTime - previousTime;
     previousTime = elapsedTime;
 
-    //Animate Camera
+    // Animate Camera
     camera.position.y = -scrollY / sizes.height * objectsDistance;
 
     const parallaxX = cursor.x;
@@ -205,7 +199,7 @@ const tick = () => {
     cameraGroup.position.x += (parallaxX - cameraGroup.position.x) * 0.1;
     cameraGroup.position.y += (parallaxY - cameraGroup.position.y) * 0.1;
 
-    //Animate Meshes
+    // Animate Meshes
     for (const mesh of sectionMeshes) {
         mesh.rotation.x += deltaTime * 0.1;
         mesh.rotation.y += deltaTime * 0.12;
