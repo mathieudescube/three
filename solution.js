@@ -1,4 +1,4 @@
-<script>
+
 /**
  * Debug
  */
@@ -220,5 +220,5 @@ const tick = () => {
 };
 
 tick();
-</script>
+
 
